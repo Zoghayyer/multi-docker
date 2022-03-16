@@ -17,7 +17,7 @@ after_success:
   # Login to Docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take all of the build images and push them to docker hub
-  - docker push azoghayyer/mulit-client
-  - docker push azoghayyer/mulit-nginx
-  - docker push azoghayyer/mulit-server
-  - docker push azoghayyer/mulit-worker
+  - docker push azoghayyer/multi-client
+  - docker push azoghayyer/multi-nginx
+  - docker push azoghayyer/multi-server
+  - docker push azoghayyer/multi-worker
