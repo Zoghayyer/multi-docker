@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t azoghayyer/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run azoghayyer/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t azoghayyer/multi-client ./client
+  - docker build -t azoghayyer/multi-nginx ./nginx
+  - docker build -t azoghayyer/multi-server ./server
+  - docker build -t azoghayyer/multi-worker ./worker
+  # Login to Docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take all of the build images and push them to docker hub
+  - docker push azoghayyer/mulit-client
+  - docker push azoghayyer/mulit-nginx
+  - docker push azoghayyer/mulit-server
+  - docker push azoghayyer/mulit-worker
